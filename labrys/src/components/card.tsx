@@ -6,7 +6,7 @@ import { Text } from "@chakra-ui/react";
 
 // const API_KEY = "8b98703c-d8ba-47ee-8375-c96f56bd9223";
 
-export default function Crypto() {
+export default function Crypto({ rank, logo, symbol, marketCap, price, change }) {
 
   return (
     <Card style={{background: "black"}}>
@@ -32,18 +32,21 @@ export default function Crypto() {
             // border = "1px solid #800080"
           >
             <Box display="flex" padding="10px">
-              <Text>#1</Text>
-            </Box>
-            <Box display="flex" flexDir="column" marginTop={0}>
-              {/* <SkeletonCircle size="28px" /> */}
-              <Text marginBottom={0}>BTC</Text>
-              <Text marginTop={0}>510.21 Bn</Text>
+              <Text>#1{rank}</Text>
             </Box>
             <Box display="flex" padding="10px">
-              <Text>26,123.21</Text>
+              <Text>O{logo}</Text>
+            </Box>
+            <Box display="flex" flexDir="column" marginTop={0}>
+              {/* <SkeletonCircle size="28px" /> ADD logo here*/}
+              <Text marginBottom={0}>BTC{symbol}</Text>
+              <Text marginTop={0}>510.21 Bn{marketCap}</Text>
+            </Box>
+            <Box display="flex" padding="10px">
+              <Text>26,123.21{price}</Text>
             </Box>
             <Box border-radius="4px" display="flex" padding="10px">
-              <Text>ICON</Text>
+              <Text>ICON{change}</Text>
             </Box>
           </Box>
         </Flex>
