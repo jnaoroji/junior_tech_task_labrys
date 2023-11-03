@@ -1,12 +1,37 @@
 import { Card, CardBody } from "@chakra-ui/react";
 import { Box, Flex } from "@chakra-ui/react";
 import { Text } from "@chakra-ui/react";
+const API_KEY = "8b98703c-d8ba-47ee-8375-c96f56bd9223";
 
-// https://coinmarketcap.com/api/documentation/v1/#operation/getV1CryptocurrencyListingsLatest
+var myHeaders = new Headers();
+  myHeaders.append("X-CMC_PRO_API_KEY", "8b98703c-d8ba-47ee-8375-c96f56bd9223");
+  myHeaders.append("Accept", "*/*");
+  
+  var requestOptions = {
+    method: 'GET',
+    headers: myHeaders,
+    redirect: 'follow'
+  };
 
-// const API_KEY = "8b98703c-d8ba-47ee-8375-c96f56bd9223";
 
-export default function Crypto({ rank, logo, symbol, marketCap, price, change }) {
+export default function Crypto() {
+  var myHeaders = new Headers();
+  myHeaders.append("X-CMC_PRO_API_KEY", API_KEY);
+  myHeaders.append("Accept", "*/*");
+
+//   var requestOptions = {
+//   method: 'GET',
+//   headers: myHeaders,
+//   redirect: 'follow'
+// };
+
+fetch("https://sandbox-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?start=1&sort=market_cap&cryptocurrency_type=all&tag=all&limit=10", { 
+  method: 'GET',
+  headers: myHeaders,
+  redirect: 'follow'})
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
 
   return (
     <Card style={{background: "black"}}>
@@ -32,21 +57,21 @@ export default function Crypto({ rank, logo, symbol, marketCap, price, change })
             // border = "1px solid #800080"
           >
             <Box display="flex" padding="10px">
-              <Text>#1{rank}</Text>
+              <Text>#1</Text>
             </Box>
             <Box display="flex" padding="10px">
-              <Text>O{logo}</Text>
+              <Text>O</Text>
             </Box>
             <Box display="flex" flexDir="column" marginTop={0}>
               {/* <SkeletonCircle size="28px" /> ADD logo here*/}
-              <Text marginBottom={0}>BTC{symbol}</Text>
-              <Text marginTop={0}>510.21 Bn{marketCap}</Text>
+              <Text marginBottom={0}>BTC</Text>
+              <Text marginTop={0}>510.21 Bn</Text>
             </Box>
             <Box display="flex" padding="10px">
-              <Text>26,123.21{price}</Text>
+              <Text>26,123.21</Text>
             </Box>
             <Box border-radius="4px" display="flex" padding="10px">
-              <Text>ICON{change}</Text>
+              <Text>ICON</Text>
             </Box>
           </Box>
         </Flex>
@@ -54,3 +79,5 @@ export default function Crypto({ rank, logo, symbol, marketCap, price, change })
     </Card>
   );
 }
+
+
