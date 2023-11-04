@@ -1,15 +1,33 @@
 import { Card, CardBody } from "@chakra-ui/react";
 import { Box, Flex } from "@chakra-ui/react";
 import { Text } from "@chakra-ui/react";
-import { GetServerSideProps } from "next";
+import { JSXElementConstructor, Key, PromiseLikeOfReactNode, ReactElement, ReactNode, ReactPortal, useState } from "react";
+import { useRouter } from "next/router";
+import { useStore } from "../pages/crytostore";
 
 export default function Crypto({ data }) {
   // console.log("Crypto", data);
+  const [favorites, setFavorites] = useState([]);
+  const router = useRouter(); // Create the router variable
+  const favoritesStore = useStore;
+
+
+  const addToFavorites = (crypto: any) => {
+    setFavorites((prevFavorites) => [...prevFavorites, crypto]);
+    // favoritesStore.addToFavorites(crypto);
+    console.log(favorites);
+    // Navigate to the myTokens page
+    // router.push("/myTokens");
+  };
 
   return (
     <div>
-      {data.map((crypto, index) => (
-        <Card key={index} style={{ background: "black" }}>
+      {data.map((crypto: { cmc_rank: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | PromiseLikeOfReactNode | null | undefined; symbol: (string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | PromiseLikeOfReactNode | null | undefined)[]; name: string | any[]; quote: { BTC: { market_cap_dominance: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | PromiseLikeOfReactNode | null | undefined; price: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | PromiseLikeOfReactNode | null | undefined; }; USD: { percent_change_24h: number; }; }; }, index: Key | null | undefined) => (
+        <Card
+          key={index}
+          style={{ background: "black" }}
+          onClick={() => addToFavorites(crypto)}
+        >
           <CardBody>
             <Flex
               justify="center" // Center horizontally
@@ -79,6 +97,17 @@ export default function Crypto({ data }) {
           </CardBody>
         </Card>
       ))}
+
+      <div>
+        <h2>Favorites:</h2>
+        <ul>
+          {favorites.map((crypto, index) => (
+            <li key={index}>
+              {crypto.name} - {crypto.quote.USD.price}
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
