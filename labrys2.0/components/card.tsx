@@ -3,22 +3,53 @@ import { Box, Flex } from "@chakra-ui/react";
 import { Text } from "@chakra-ui/react";
 import { JSXElementConstructor, Key, PromiseLikeOfReactNode, ReactElement, ReactNode, ReactPortal, useState } from "react";
 import { useRouter } from "next/router";
-import { useStore } from "../pages/crytostore";
+import  useStore  from "../pages/crytostore";
 
 export default function Crypto({ data }) {
   // console.log("Crypto", data);
   const [favorites, setFavorites] = useState([]);
   const router = useRouter(); // Create the router variable
-  const favoritesStore = useStore;
+  // const favoritesStore = useStore;
 
-
-  const addToFavorites = (crypto: any) => {
+  const addToFavorites = (crypto) => {
     setFavorites((prevFavorites) => [...prevFavorites, crypto]);
-    // favoritesStore.addToFavorites(crypto);
-    console.log(favorites);
-    // Navigate to the myTokens page
-    // router.push("/myTokens");
+    
+    fetch("/api/favorites", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify( crypto ),
+    })
+      .then((response) => {
+        if (response.status === 200 || 201) {
+          // Request was successful
+          console.log("Crypto added to favorites successfully.");
+          router.push("/myTokens");
+        } else {
+          // Request failed, handle the error here
+          console.error("Error adding crypto to favorites.");
+        }
+      })
+      .catch((error) => {
+        console.error("Network error:", error);
+      });
   };
+  // const addToFavorites = (crypto: any) => {
+  //   setFavorites((prevFavorites) => [...prevFavorites, crypto]);
+  //   // favoritesStore.addToFavorites(crypto);
+  //   // console.log(favorites);
+  //   // Navigate to the myTokens page
+  //   // router.push("/myTokens");
+  //     fetch("/api/favorites", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({ crypto }),
+  //     });
+  //   };
+  
 
   return (
     <div>

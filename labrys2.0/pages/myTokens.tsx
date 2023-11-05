@@ -1,38 +1,39 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Crypto from '../components/card';
 import useStore from './crytostore';
 import { Flex } from "@chakra-ui/react";
 
-export default function myTokens({favorites:any}) {
-    // console.log('favorites', favorites);
-//   const [selectedCards, setSelectedCards] = useState([]);
+export default function myTokens() {
+  const [favorites, setFavorites] = useState([]);
 
-//   adds a card to the list
-//   const handleCardClick = (cardData) => {
-//     setSelectedCards([...selectedCards, cardData]);
-//   };
+  useEffect(() => {
+    fetch("/api/favorites")
+      .then((response) => response.json())
+      .then((data) => {
+        setFavorites(data.data); // Access the "data" property to set favorites
+      })
+      .catch((error) => console.error(error));
+  }, []);
 
   return (
-    <div  style={{ color: "white" }}>
-    <Flex
-              justify="center" // Center horizontally
-              align="center" // Center vertically
-              direction="column"
-              marginBottom={2}
-            >
-      <h1>My Tokens</h1>
-      <div>
-        <h2>Favorites:</h2>
-        {/* <ul>
-          {favorites.map((crypto, index) => (
-            <li key={index}>
-              {crypto.name} - {crypto.quote.USD.price}
-            </li>
-          ))}
-        </ul> */}
-      </div>
-        </Flex>
-      </div>
-    
+    <div style={{ color: "white" }}>
+      <Flex
+        justify="center"
+        align="center"
+        direction="column"
+        marginBottom={2}
+      >
+        <h1>My Favourite Tokens</h1>
+        <div>
+          <ul>
+            {favorites.map((crypto, index) => (
+              <li key={index}>
+                {crypto.name} - {crypto.quote.USD.price}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Flex>
+    </div>
   );
 }
