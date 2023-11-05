@@ -8,15 +8,19 @@
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "baseUrl": "src", // Set this to the root of your source code folder
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@chakra-ui/react": ["node_modules/@chakra-ui/react"],
+      "@chakra-ui/icons": ["node_modules/@chakra-ui/icons"]
+      // ... other module aliases as needed
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "lib/mongodb.ts"],
   "exclude": ["node_modules"]
 }

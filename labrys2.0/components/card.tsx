@@ -1,17 +1,38 @@
 import { Card, CardBody } from "@chakra-ui/react";
 import { Box, Flex } from "@chakra-ui/react";
 import { Text } from "@chakra-ui/react";
-import { JSXElementConstructor, Key, PromiseLikeOfReactNode, ReactElement, ReactNode, ReactPortal, useState } from "react";
+import {  Key, ReactNode, useState } from "react";
 import { useRouter } from "next/router";
-import  useStore  from "../pages/crytostore";
+// import  useStore  from "../pages/crytostore";
+interface QuoteData {
+  BTC: {
+    market_cap_dominance: string | number;
+    price: number;
+  };
+  USD: {
+    percent_change_24h: number;
+  };
+}
+interface CryptoData {
+  
+  cmc_rank: string;
+  symbol: string;
+  name: string;
+  market_cap_dominance: string | number;
+  price: number;
+  percent_change_24h: number;
+  quote: QuoteData; 
+  index: Key | number;
+}
 
-export default function Crypto({ data }) {
-  // console.log("Crypto", data);
-  const [favorites, setFavorites] = useState([]);
+export default function Crypto({ data }: { data: CryptoData }) {
+
+ 
+  const [favorites, setFavorites] = useState<CryptoData[]>([]);
   const router = useRouter(); // Create the router variable
-  // const favoritesStore = useStore;
 
-  const addToFavorites = (crypto) => {
+
+  const addToFavorites = (crypto: CryptoData) => {
     setFavorites((prevFavorites) => [...prevFavorites, crypto]);
     
     fetch("/api/favorites", {
@@ -38,7 +59,7 @@ export default function Crypto({ data }) {
 
   return (
     <div>
-      {data.map((crypto: { cmc_rank: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | PromiseLikeOfReactNode | null | undefined; symbol: (string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | PromiseLikeOfReactNode | null | undefined)[]; name: string | any[]; quote: { BTC: { market_cap_dominance: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | PromiseLikeOfReactNode | null | undefined; price: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | PromiseLikeOfReactNode | null | undefined; }; USD: { percent_change_24h: number; }; }; }, index: Key | null | undefined) => (
+      {Array.isArray(data) && data.map((crypto: CryptoData, index: Key) => (
         <Card
           key={index}
           style={{ background: "black" }}

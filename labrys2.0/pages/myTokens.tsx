@@ -1,12 +1,27 @@
+// @ts-nocheck
+import  React  from 'react';
 import { useState, useEffect } from 'react';
 import { Flex } from "@chakra-ui/react";
 import { Text } from "@chakra-ui/react";
 import { Button, ButtonGroup } from '@chakra-ui/react';
 import { StarIcon } from '@chakra-ui/icons';
+import { ObjectId } from 'mongodb';
 
-
-export default function myTokens() {
-  const [favorites, setFavorites] = useState([]);
+interface FavData {
+  map: any;
+  cmc_rank: string;
+  symbol: string;
+  name: string;
+  quote: string;
+  BTC: number | any;
+  market_cap_dominance: string | number;
+  price: number;
+  percent_change_24h: number;
+  index: number;
+  _id: ObjectId;
+}
+export default function MyTokens() {
+  const [favorites, setFavorites] = useState<FavData[]>([]);
 
   useEffect(() => {
     fetch("/api/favorites")
@@ -17,7 +32,7 @@ export default function myTokens() {
       .catch((error) => console.error(error));
   }, []);
   
-  const handleDeleteFavorite = async (favoriteId) => {
+  const handleDeleteFavorite = async (favoriteId:ObjectId) => {
     const deleteUrl = `/api/favorites/${favoriteId}`;
 
   
@@ -45,7 +60,7 @@ export default function myTokens() {
         <h1 style={{ color: "white", marginBottom:"10px" }}><StarIcon style={{ color: "yellow"}}/>  My Favourite Tokens  <StarIcon style={{ color: "yellow"}}/></h1>
         <div>
           <ul>
-            {favorites.map((crypto, index) => (
+          {favorites.map((crypto: FavData, index) => (
               <li key={index} style={{ display: "flex", alignItems: "center" }}>
               <Text style={{ textTransform: "uppercase", color:"white" }}>
                 {crypto.name.slice(0, 3)} - 

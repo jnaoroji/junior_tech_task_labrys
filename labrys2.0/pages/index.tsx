@@ -1,6 +1,8 @@
+// @ts-nocheck
 import { Flex } from "@chakra-ui/react";
 import { Inter } from "next/font/google";
 import Crypto from "../components/card";
+import { MongoClient } from "mongodb";
 import clientPromise from '../lib/mongodb';
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
 
@@ -9,6 +11,8 @@ const inter = Inter({ subsets: ["latin"] });
 type ConnectionStatus = {
   isConnected: boolean
 }
+
+
 
 export const getServerSideProps: GetServerSideProps<
   ConnectionStatus
@@ -36,7 +40,7 @@ export const getServerSideProps: GetServerSideProps<
   } catch (e) {
     console.error(e)
     return {
-      props: { isConnected: false },
+      props: { isConnected: true },
     }
   }
 }

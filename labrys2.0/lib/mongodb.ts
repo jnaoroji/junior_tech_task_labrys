@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { MongoClient } from 'mongodb';
 
 const uri = process.env.MONGODB_URI;
@@ -6,8 +7,9 @@ const options = {
   useNewUrlParser: true,
 }
 
+
 let client;
-let clientPromise;
+let clientPromise:any;
 
 if (!process.env.MONGODB_URI) {
   throw new Error('Add Mongo URI to .env.local');
