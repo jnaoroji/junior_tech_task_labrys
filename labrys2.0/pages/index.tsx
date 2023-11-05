@@ -25,7 +25,7 @@ export const getServerSideProps: GetServerSideProps<
       {
         method: "GET",
         headers: {
-          "X-CMC_PRO_API_KEY": process.env["X-CMC_PRO_API_KEY"] || "",
+          "X-CMC_PRO_API_KEY": process.env["API_KEY"] || "",
         },
       }
     );
