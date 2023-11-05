@@ -35,21 +35,6 @@ export default function Crypto({ data }) {
         console.error("Network error:", error);
       });
   };
-  // const addToFavorites = (crypto: any) => {
-  //   setFavorites((prevFavorites) => [...prevFavorites, crypto]);
-  //   // favoritesStore.addToFavorites(crypto);
-  //   // console.log(favorites);
-  //   // Navigate to the myTokens page
-  //   // router.push("/myTokens");
-  //     fetch("/api/favorites", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({ crypto }),
-  //     });
-  //   };
-  
 
   return (
     <div>
@@ -129,16 +114,6 @@ export default function Crypto({ data }) {
         </Card>
       ))}
 
-      <div>
-        <h2>Favorites:</h2>
-        <ul>
-          {favorites.map((crypto, index) => (
-            <li key={index}>
-              {crypto.name} - {crypto.quote.USD.price}
-            </li>
-          ))}
-        </ul>
-      </div>
     </div>
   );
 }
